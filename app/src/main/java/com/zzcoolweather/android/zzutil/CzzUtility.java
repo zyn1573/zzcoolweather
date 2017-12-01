@@ -60,7 +60,7 @@ public class CzzUtility {
                 CzzCounty y = new CzzCounty();
                 y.setCountyName(j.getString("name"));
                 y.setWeatherId(j.getString("weather_id"));
-                y.setId(cid);
+                y.setCityId(cid);
                 y.save();
             }
             return true;

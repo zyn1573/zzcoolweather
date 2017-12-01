@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import okhttp3.Response;
  */
 
 public class FzzChooseArea extends Fragment {
+    private static final String TAG = "http://FzzChooseArea";
+
     public static final int zzLEVEL_PROVINCE = 0;
     public static final int zzLEVEL_CITY = 1;
     public static final int zzLEVEL_COUNTY = 2;
@@ -123,7 +126,7 @@ public class FzzChooseArea extends Fragment {
         zztxt_title.setText(mSelectedProvince.getProvinceName());
         zzbtn_back.setVisibility(View.VISIBLE);
         mCityS = DataSupport.where("provinceId = ?", String.valueOf(mSelectedProvince.getId())).find(CzzCity.class);
-        if (mProvinceS.isEmpty()) {
+        if (mCityS.isEmpty()) {
             int pcode = mSelectedProvince.getProvinceCode();
             String address = "http://guolin.tech/api/china/" + pcode;
             mQueryFromServer(address, zzLEVEL_CITY);
@@ -182,7 +185,7 @@ public class FzzChooseArea extends Fragment {
                         result = CzzUtility.zzHandleProvinceResponse(responseText);
                         break;
                     case zzLEVEL_CITY:
-                        result = CzzUtility.zzHandleCityResponse(responseText, mSelectedCity.getId());
+                        result = CzzUtility.zzHandleCityResponse(responseText, mSelectedProvince.getId());
                         break;
                     case zzLEVEL_COUNTY:
                         result = CzzUtility.zzHandleCountyResponse(responseText, mSelectedCity.getId());
