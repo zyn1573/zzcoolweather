@@ -1,6 +1,7 @@
 package com.zzcoolweather.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -86,6 +87,12 @@ public class FzzChooseArea extends Fragment {
                 } else if (mCurrentLevel == zzLEVEL_CITY) {
                     mSelectedCity = mCityS.get(position);
                     mQueryCounties();
+                }else if(mCurrentLevel==zzLEVEL_COUNTY){
+                    String wid=mCountyS.get(position).getWeatherId();
+                    Intent intent=new Intent(getActivity(),AzzWeather.class);
+                    intent.putExtra("weather_id",wid);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

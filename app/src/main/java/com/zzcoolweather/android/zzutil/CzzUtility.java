@@ -2,9 +2,11 @@ package com.zzcoolweather.android.zzutil;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.zzcoolweather.android.zzdb.CzzCity;
 import com.zzcoolweather.android.zzdb.CzzCounty;
 import com.zzcoolweather.android.zzdb.CzzProvince;
+import com.zzcoolweather.android.zzgson.CzzWeather;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -68,5 +70,17 @@ public class CzzUtility {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    public static CzzWeather zzHandleWeatherResonse(String response){
+        try {
+            JSONObject jo = new JSONObject(response);
+            JSONArray ja=jo.getJSONArray("HeWeather");
+            String s=ja.getJSONObject(0).toString();
+            return  new Gson().fromJson(s,CzzWeather.class);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
