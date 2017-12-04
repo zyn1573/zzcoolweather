@@ -4,12 +4,15 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -30,9 +33,11 @@ import okhttp3.Response;
 
 public class AzzWeather extends AppCompatActivity {
 
-    private SwipeRefreshLayout zzswp_refresh;
+    public DrawerLayout zzlo_drawer;
+    public SwipeRefreshLayout zzlo_swipe_refresh;
     private ScrollView zzscr_weather_all;
     private ImageView zzimg_bing_pic;
+    private Button zzbtn_nav;
     private TextView zztxt_title_city;
     private TextView zztxt_title_update_time;
     private TextView zztxt_degree;
@@ -56,9 +61,11 @@ public class AzzWeather extends AppCompatActivity {
         }
         setContentView(R.layout.zzlayout_azz_weather);
 
-        zzswp_refresh = (SwipeRefreshLayout) findViewById(R.id.zzswp_refresh);
+        zzlo_drawer=(DrawerLayout) findViewById(R.id.zzlo_drawer);
+        zzlo_swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.zzlo_swipe_refresh);
         zzscr_weather_all = (ScrollView) findViewById(R.id.zzscr_weather_all);
         zzimg_bing_pic = (ImageView) findViewById(R.id.zzimg_bing_pic);
+        zzbtn_nav = (Button) findViewById(R.id.zzbtn_nav);
         zztxt_title_city = (TextView) findViewById(R.id.zztxt_title_city);
         zztxt_title_update_time = (TextView) findViewById(R.id.zztxt_title_update_time);
         zztxt_degree = (TextView) findViewById(R.id.zztxt_degree);
@@ -70,8 +77,6 @@ public class AzzWeather extends AppCompatActivity {
         zztxt_car_wash = (TextView) findViewById(R.id.zztxt_car_wash);
         zztxt_sport = (TextView) findViewById(R.id.zztxt_sport);
 
-        zzswp_refresh.setColorSchemeResources(R.color.colorPrimary);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         String ws = prefs.getString("weather", null);
@@ -82,26 +87,34 @@ public class AzzWeather extends AppCompatActivity {
         } else {
             mWeatherId = getIntent().getStringExtra("weather_id");
             zzscr_weather_all.setVisibility(View.INVISIBLE);
-            mReq(mWeatherId);
+            zzReq(mWeatherId);
         }
 
         String bingPicUrl = prefs.getString("bing_pic", null);
         if (!TextUtils.isEmpty(bingPicUrl)) {
             Glide.with(this).load(bingPicUrl).into(zzimg_bing_pic);
         } else {
-            mLoadBingPic();
+            zzLoadBingPic();
         }
 
-        zzswp_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        zzlo_swipe_refresh.setColorSchemeResources(R.color.colorPrimary);
+        zzlo_swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mReq(mWeatherId);
-                mLoadBingPic();
+                zzReq(mWeatherId);
+                zzLoadBingPic();
+            }
+        });
+
+        zzbtn_nav.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                zzlo_drawer.openDrawer(GravityCompat.START);
             }
         });
     }
 
-    private void mReq(final String wid) {
+    public void zzReq(final String wid) {
         String url = "http://guolin.tech/api/weather/?cityid="
                 + wid
                 + "&key=d664e054215e45f0ab97ac4692664e27";
@@ -122,7 +135,7 @@ public class AzzWeather extends AppCompatActivity {
                         } else {
                             Toast.makeText(AzzWeather.this, "获取天气失败", Toast.LENGTH_SHORT).show();
                         }
-                        zzswp_refresh.setRefreshing(false);
+                        zzlo_swipe_refresh.setRefreshing(false);
                     }
                 });
             }
@@ -134,14 +147,14 @@ public class AzzWeather extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(AzzWeather.this, "获取天气失败", Toast.LENGTH_SHORT).show();
-                        zzswp_refresh.setRefreshing(false);
+                        zzlo_swipe_refresh.setRefreshing(false);
                     }
                 });
             }
         });
     }
 
-    private void mLoadBingPic() {
+    public void zzLoadBingPic() {
         String url = "http://guolin.tech/api/bing_pic";
         CzzHttpUtil.zzGetAsyn(url, new Callback() {
             @Override

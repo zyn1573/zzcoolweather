@@ -87,12 +87,20 @@ public class FzzChooseArea extends Fragment {
                 } else if (mCurrentLevel == zzLEVEL_CITY) {
                     mSelectedCity = mCityS.get(position);
                     mQueryCounties();
-                }else if(mCurrentLevel==zzLEVEL_COUNTY){
-                    String wid=mCountyS.get(position).getWeatherId();
-                    Intent intent=new Intent(getActivity(),AzzWeather.class);
-                    intent.putExtra("weather_id",wid);
-                    startActivity(intent);
-                    getActivity().finish();
+                } else if (mCurrentLevel == zzLEVEL_COUNTY) {
+                    String wid = mCountyS.get(position).getWeatherId();
+                    if (getActivity() instanceof AzzMain) {
+                        Intent intent = new Intent(getActivity(), AzzWeather.class);
+                        intent.putExtra("weather_id", wid);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof AzzWeather) {
+                        AzzWeather a=(AzzWeather)getActivity();
+                        a.zzlo_drawer.closeDrawers();
+                        a.zzlo_swipe_refresh.setRefreshing(true);
+                        a.zzReq(wid);
+                        a.zzLoadBingPic();
+                    }
                 }
             }
         });
@@ -231,7 +239,7 @@ public class FzzChooseArea extends Fragment {
 
     void mShowPorgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog=new ProgressDialog(getActivity());
+            mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setMessage("正在加载..");
             mProgressDialog.setCanceledOnTouchOutside(false);
         }

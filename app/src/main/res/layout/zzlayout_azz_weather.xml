@@ -10,35 +10,49 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/zzswp_refresh"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/zzlo_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/zzscr_weather_all"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/zzlo_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:id="@+id/zzscr_weather_all"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/zzlayout_azz_weather_title" />
+
+                    <include layout="@layout/zzlayout_azz_weather_now" />
+
+                    <include layout="@layout/zzlayout_azz_weather_forecast" />
+
+                    <include layout="@layout/zzlayout_azz_weather_aqi" />
+
+                    <include layout="@layout/zzlayout_azz_weather_suggestion" />
+
+                </LinearLayout>
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <fragment
+            android:id="@+id/zzfrg_choose_area"
+            android:name="com.zzcoolweather.android.FzzChooseArea"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none">
+            android:layout_gravity="start" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical">
-
-                <include layout="@layout/zzlayout_azz_weather_title" />
-
-                <include layout="@layout/zzlayout_azz_weather_now" />
-
-                <include layout="@layout/zzlayout_azz_weather_forecast" />
-
-                <include layout="@layout/zzlayout_azz_weather_aqi" />
-
-                <include layout="@layout/zzlayout_azz_weather_suggestion" />
-
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.DrawerLayout>
 </FrameLayout>
