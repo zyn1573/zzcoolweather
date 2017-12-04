@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AzzWeather"></activity>
+        <activity android:name=".AzzWeather" />
+
+        <service
+            android:name=".SzzAutoUpdate"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

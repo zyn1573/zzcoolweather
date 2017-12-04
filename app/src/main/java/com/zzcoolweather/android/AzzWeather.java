@@ -1,5 +1,6 @@
 package com.zzcoolweather.android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -216,5 +217,8 @@ public class AzzWeather extends AppCompatActivity {
         zztxt_sport.setText(sport);
 
         zzscr_weather_all.setVisibility(View.VISIBLE);
+
+        Intent i=new Intent(this,SzzAutoUpdate.class);
+        startService(i);
     }
 }
