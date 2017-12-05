@@ -34,7 +34,7 @@ public class CzzUtility {
         return false;
     }
 
-    public static boolean zzHandleCityResponse( String response,int pid) {
+    public static boolean zzHandleCityResponse(String response, int pid) {
         if (TextUtils.isEmpty(response)) return false;
         try {
             JSONArray js = new JSONArray(response);
@@ -53,7 +53,7 @@ public class CzzUtility {
         return false;
     }
 
-    public static boolean zzHandleCountyResponse( String response,int cid) {
+    public static boolean zzHandleCountyResponse(String response, int cid) {
         if (TextUtils.isEmpty(response)) return false;
         try {
             JSONArray js = new JSONArray(response);
@@ -72,13 +72,13 @@ public class CzzUtility {
         return false;
     }
 
-    public static CzzWeather zzHandleWeatherResonse(String response){
+    public static CzzWeather zzHandleWeatherResonse(String response) {
         try {
             JSONObject jo = new JSONObject(response);
-            JSONArray ja=jo.getJSONArray("HeWeather");
-            String s=ja.getJSONObject(0).toString();
-            return  new Gson().fromJson(s,CzzWeather.class);
-        }catch (Exception ex){
+            JSONArray ja = jo.getJSONArray("HeWeather");
+            String s = ja.getJSONObject(0).toString();
+            return new Gson().fromJson(s, CzzWeather.class);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;

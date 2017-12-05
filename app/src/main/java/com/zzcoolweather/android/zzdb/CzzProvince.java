@@ -10,6 +10,7 @@ public class CzzProvince extends DataSupport {
     private int id;
     private String provinceName;
     private int provinceCode;
+
     //region geter / seter
     public int getId() {
         return id;

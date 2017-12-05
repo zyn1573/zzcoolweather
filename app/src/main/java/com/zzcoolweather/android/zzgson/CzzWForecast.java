@@ -15,12 +15,12 @@ public class CzzWForecast {
     @SerializedName("cond")
     public CzzWMore more;
 
-    public class CzzWTemperature{
+    public class CzzWTemperature {
         public String max;
         public String min;
     }
 
-    public class CzzWMore{
+    public class CzzWMore {
         @SerializedName("txt_d")
         public String info;
     }

@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:text="预报"
         android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <LinearLayout
         android:id="@+id/zzlo_forecast_list"

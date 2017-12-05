@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class AzzWeather extends AppCompatActivity {
-
+    private static final String TAG = "http://AzzWeather";
+    
     public DrawerLayout zzlo_drawer;
     public SwipeRefreshLayout zzlo_swipe_refresh;
     private ScrollView zzscr_weather_all;
@@ -54,6 +56,8 @@ public class AzzWeather extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
+        
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
@@ -62,7 +66,7 @@ public class AzzWeather extends AppCompatActivity {
         }
         setContentView(R.layout.zzlayout_azz_weather);
 
-        zzlo_drawer=(DrawerLayout) findViewById(R.id.zzlo_drawer);
+        zzlo_drawer = (DrawerLayout) findViewById(R.id.zzlo_drawer);
         zzlo_swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.zzlo_swipe_refresh);
         zzscr_weather_all = (ScrollView) findViewById(R.id.zzscr_weather_all);
         zzimg_bing_pic = (ImageView) findViewById(R.id.zzimg_bing_pic);
@@ -107,7 +111,7 @@ public class AzzWeather extends AppCompatActivity {
             }
         });
 
-        zzbtn_nav.setOnClickListener(new View.OnClickListener(){
+        zzbtn_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 zzlo_drawer.openDrawer(GravityCompat.START);
@@ -131,7 +135,7 @@ public class AzzWeather extends AppCompatActivity {
                             SharedPreferences.Editor edt = PreferenceManager.getDefaultSharedPreferences(AzzWeather.this).edit();
                             edt.putString("weather", text);
                             edt.apply();
-                            mWeatherId=w.basic.weatherId;
+                            mWeatherId = w.basic.weatherId;
                             mShow(w);
                         } else {
                             Toast.makeText(AzzWeather.this, "获取天气失败", Toast.LENGTH_SHORT).show();
@@ -180,6 +184,8 @@ public class AzzWeather extends AppCompatActivity {
     }
 
     private void mShow(CzzWeather w) {
+        Log.d(TAG, "mShow: #1");
+
         String cityName = w.basic.cityName;
         String updateTime = w.basic.update.updateTime.split(" ")[1];
         String degree = w.now.temperature + "℃";
@@ -218,7 +224,8 @@ public class AzzWeather extends AppCompatActivity {
 
         zzscr_weather_all.setVisibility(View.VISIBLE);
 
-        Intent i=new Intent(this,SzzAutoUpdate.class);
+        Log.d(TAG, "mShow: #2");
+        Intent i = new Intent(this, SzzAutoUpdate.class);
         startService(i);
     }
 }

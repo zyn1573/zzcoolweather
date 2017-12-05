@@ -49,5 +49,4 @@ public class CzzCounty extends DataSupport {
     //endregion
 
 
-
 }

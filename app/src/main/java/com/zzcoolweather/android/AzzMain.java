@@ -13,9 +13,9 @@ public class AzzMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zzlayout_azz_main);
 
-        SharedPreferences p= PreferenceManager.getDefaultSharedPreferences(this);
-        if(p.getString("weather",null)!=null){
-            Intent intent=new Intent(this,AzzWeather.class);
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        if (p.getString("weather", null) != null) {
+            Intent intent = new Intent(this, AzzWeather.class);
             startActivity(intent);
             finish();
         }

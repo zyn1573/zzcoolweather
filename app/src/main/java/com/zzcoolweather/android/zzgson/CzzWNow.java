@@ -13,7 +13,7 @@ public class CzzWNow {
     @SerializedName("cond")
     public CzzWMore more;
 
-    public class CzzWMore{
+    public class CzzWMore {
         @SerializedName("txt")
         public String info;
     }

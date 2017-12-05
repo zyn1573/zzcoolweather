@@ -7,7 +7,7 @@ package com.zzcoolweather.android.zzgson;
 public class CzzWAqi {
     public CzzWAqiCity city;
 
-    public class CzzWAqiCity{
+    public class CzzWAqiCity {
         public String aqi;
         public String pm25;
     }

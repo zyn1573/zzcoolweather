@@ -11,6 +11,7 @@ public class CzzCity extends DataSupport {
     private String cityName;
     private int cityCode;
     private int provinceId;
+
     //region geter / seter
     public int getId() {
         return id;

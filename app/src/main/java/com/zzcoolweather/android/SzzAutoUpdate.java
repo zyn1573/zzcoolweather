@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.zzcoolweather.android.zzgson.CzzWeather;
@@ -22,6 +23,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class SzzAutoUpdate extends Service {
+    private static final String TAG = "http://SzzAutoUpdate";
+
     public SzzAutoUpdate() {
     }
 
@@ -35,23 +38,25 @@ public class SzzAutoUpdate extends Service {
         mUpdateWeather();
         mUpdateBingPic();
 
-        AlarmManager m=(AlarmManager)getSystemService(ALARM_SERVICE);
-        int anHour=1*60*60*1000;
-        long nextTime= SystemClock.elapsedRealtime()+anHour;
-        Intent i=new Intent(this,SzzAutoUpdate.class);
-        PendingIntent pi=PendingIntent.getService(this,0,i,0);
+        AlarmManager m = (AlarmManager) getSystemService(ALARM_SERVICE);
+        int anHour = 1 * 60 * 60 * 1000;
+        long nextTime = SystemClock.elapsedRealtime() + anHour;
+        Intent i = new Intent(this, SzzAutoUpdate.class);
+        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
         m.cancel(pi);
-        m.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,nextTime,pi);
+        m.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, nextTime, pi);
 
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void mUpdateWeather() {
-        SharedPreferences p= PreferenceManager.getDefaultSharedPreferences(this);
-        String s=p.getString("weather",null);
-        if(!TextUtils.isEmpty(s)){
-            CzzWeather w= CzzUtility.zzHandleWeatherResonse(s);
-            String wid=w.basic.weatherId;
+        Log.d(TAG, "mUpdateWeather: ");
+
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+        String s = p.getString("weather", null);
+        if (!TextUtils.isEmpty(s)) {
+            CzzWeather w = CzzUtility.zzHandleWeatherResonse(s);
+            String wid = w.basic.weatherId;
             String url = "http://guolin.tech/api/weather/?cityid="
                     + wid
                     + "&key=d664e054215e45f0ab97ac4692664e27";
@@ -63,8 +68,8 @@ public class SzzAutoUpdate extends Service {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    String s=response.body().string();
-                    CzzWeather w= CzzUtility.zzHandleWeatherResonse(s);
+                    String s = response.body().string();
+                    CzzWeather w = CzzUtility.zzHandleWeatherResonse(s);
                     if (w != null && "ok".equals(w.status)) {
                         SharedPreferences.Editor edt = PreferenceManager.getDefaultSharedPreferences(SzzAutoUpdate.this).edit();
                         edt.putString("weather", s);
@@ -74,6 +79,7 @@ public class SzzAutoUpdate extends Service {
             });
         }
     }
+
     private void mUpdateBingPic() {
         String url = "http://guolin.tech/api/bing_pic";
         CzzHttpUtil.zzGetAsyn(url, new Callback() {

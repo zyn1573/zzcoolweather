@@ -15,15 +15,17 @@ public class CzzWSuggestion {
 
     public CzzWSport sport;
 
-    public class CzzWComfort{
+    public class CzzWComfort {
         @SerializedName("txt")
         public String info;
     }
-    public class CzzWCarWash{
+
+    public class CzzWCarWash {
         @SerializedName("txt")
         public String info;
     }
-    public class CzzWSport{
+
+    public class CzzWSport {
         @SerializedName("txt")
         public String info;
     }

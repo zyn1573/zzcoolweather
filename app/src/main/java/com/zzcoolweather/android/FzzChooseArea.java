@@ -94,8 +94,8 @@ public class FzzChooseArea extends Fragment {
                         intent.putExtra("weather_id", wid);
                         startActivity(intent);
                         getActivity().finish();
-                    }else if (getActivity() instanceof AzzWeather) {
-                        AzzWeather a=(AzzWeather)getActivity();
+                    } else if (getActivity() instanceof AzzWeather) {
+                        AzzWeather a = (AzzWeather) getActivity();
                         a.zzlo_drawer.closeDrawers();
                         a.zzlo_swipe_refresh.setRefreshing(true);
                         a.zzReq(wid);

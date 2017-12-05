@@ -1,9 +1,9 @@
 <litepal>
-<dbname value="zzmain" />
+    <dbname value="zzmain" />
     <version value="1" />
     <list>
-        <mapping class="com.zzcoolweather.android.zzdb.CzzProvince"/>
-        <mapping class="com.zzcoolweather.android.zzdb.CzzCity"/>
-        <mapping class="com.zzcoolweather.android.zzdb.CzzCounty"/>
+        <mapping class="com.zzcoolweather.android.zzdb.CzzProvince" />
+        <mapping class="com.zzcoolweather.android.zzdb.CzzCity" />
+        <mapping class="com.zzcoolweather.android.zzdb.CzzCounty" />
     </list>
 </litepal>

@@ -15,7 +15,7 @@ public class CzzWBasic {
 
     public CzzWUpdate update;
 
-    public class CzzWUpdate{
+    public class CzzWUpdate {
         @SerializedName("loc")
         public String updateTime;
     }
